@@ -975,7 +975,6 @@ class PR_bal(om.ImplicitComponent):
     def linearize(self, inputs, outputs, J):
         pass
 
-
 class PressureCalcs(om.ExplicitComponent):
     """
     Performs pressure calculations to get throat conditions.
