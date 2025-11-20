@@ -41,7 +41,7 @@ class CoolingCalcs(om.ExplicitComponent):
         self.add_input('turb_pwr', val=1, units='Btu/s', desc='power produced by the whole turbine')
         self.add_input('Pt_in', val=1, units='psi', desc='turbine inlet pressure') # note: NOT the pressure at the row. Across the whole turbine!
         self.add_input('Pt_out', val=1, units='psi', desc='turbine exit pressure')
-        self.add_input('x_factor', val=1, desc='technology factor. 1 is current technology, lower is more advanced technology')
+        self.add_input('x_factor', val=0.8, desc='technology factor. 1 is current technology, lower is more advanced technology')
         self.add_input('W_primary', val=1, units='lbm/s', desc="flow into the row")
         self.add_input('Tt_primary', val=1, units='degR', desc='total temperature of primary flow coming into the row')
         self.add_input('Tt_cool', val=1, units='degR', desc='total temperature of cooling flow coming into the row')
@@ -67,13 +67,19 @@ class CoolingCalcs(om.ExplicitComponent):
         n_stages = self.options['n_stages']
         i_row = self.options['i_row']
 
+        # Determine which stage this row is in (0-based)
+        stage_index = i_row // 2
+
         if i_row % 2 == 0: # even rows are stators
             T_gas = inputs['Tt_primary'] + self.options['T_safety']
             dh = 0
+            # stator row: no work, so stays at stage inlet pressure
+            self.i_stage = stage_index / n_stages
         else: # rotor
             T_gas = .92*inputs['Tt_primary'] + self.options['T_safety']
             dh = inputs['turb_pwr']/n_stages # only rotors do work
-
+            # rotor row: completes this stage's pressure drop
+            self.i_stage = (stage_index + 1) / n_stages
 
         if i_row == 0:
             profile_factor = .3
@@ -100,7 +106,6 @@ class CoolingCalcs(om.ExplicitComponent):
         Pt_out = inputs['Pt_out']
         Pt_in = inputs['Pt_in']
         outputs['Pt_stage'] = Pt_out + (Pt_in-Pt_out)*self.i_stage
-
 
     def compute_partials(self, inputs, J):
 
