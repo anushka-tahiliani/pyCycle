@@ -20,6 +20,12 @@ class FlightConditions(Element):
                                    'is mixed into the flow at at the ratio set by the `mix_ratio` input')
         self.options.declare('mix_ratio_name', default='mix:ratio', 
                              desc='The name of the input that governs the mix ratio of the reactant to the primary flow')
+        self.options.declare(
+            'use_external_atmosphere',
+            default=False,
+            types=bool,
+            desc='If True, pycycle atmosphere model is not added, and user is expected to connect external values to `fc.ambient_static_temperature` (static temperature), `fc.ambient_static_pressure` (static pressure), and `fc.ambient_density` (static density)',
+        )
 
         super().initialize()
         
@@ -53,7 +59,28 @@ class FlightConditions(Element):
         # composition = self.Fl_O_data['Fl_O']
         composition = self.options['composition']
 
-        self.add_subsystem('ambient', Ambient(), promotes=('alt', 'dTs'))  # inputs
+        if not self.options['use_external_atmosphere']:
+            self.add_subsystem('ambient', Ambient(), promotes=('alt', 'dTs'))
+        else:
+            # directly connect Ts, Ps, rhos from external component
+            passthru = om.ExecComp(
+                ['Ts = Ts_in', 'Ps = Ps_in', 'rhos = rhos_in'],
+                Ts={'units': 'degR'},
+                Ts_in={'units': 'degR'},
+                Ps={'units': 'psi'},
+                Ps_in={'units': 'psi'},
+                rhos={'units': 'slug/ft**3'},
+                rhos_in={'units': 'slug/ft**3'},
+            )
+            self.add_subsystem(
+                'ambient',
+                passthru,
+                promotes_inputs=[
+                    ('Ts_in', 'ambient_static_temperature'),
+                    ('Ps_in', 'ambient_static_pressure'),
+                    ('rhos_in', 'ambient_density'),
+                ],
+            )
 
         conv = self.add_subsystem('conv', om.Group(), promotes=['*'])
         if reactant is not False:
