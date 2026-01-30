@@ -401,7 +401,7 @@ def plot_compressor_maps(prob, element_names, eff_vals=np.array([0,0.5,0.55,0.6,
 
           plt.colorbar(eff)
 
-          plt.plot(prob[e_name+'.Wc'], prob[e_name+'.map.scalars.PR'][0], 'ko')
+          plt.plot(prob[e_name+'.Wc'], prob[e_name+'.PR'][0],'ko')
 
           plt.clabel(Nc, fontsize=9, inline=False)
           plt.clabel(R, fontsize=9, inline=False)
