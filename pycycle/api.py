@@ -32,12 +32,12 @@ from pycycle.maps.HPC_map import HPCMap
 from pycycle.maps.LPC_map import LPCMap
 from pycycle.maps.HPT_map import HPTMap
 from pycycle.maps.LPT_map import LPTMap
-from pycycle.maps.LPC_map_ones import LPCMap_ones
-from pycycle.maps.LPT_map_ones import LPTMap_ones
+# from pycycle.maps.LPC_map_ones import LPCMap_ones
+# from pycycle.maps.LPT_map_ones import LPTMap_ones
 from pycycle.maps.ncp01 import NCP01
-from pycycle.maps.N3_Fan_map import FanMap_N3
-from pycycle.maps.Fan_map_E3 import FanMap_E3
-from pycycle.maps.HPC_map_E3 import HPCMapE3
+# from pycycle.maps.N3_Fan_map import FanMap_N3
+# from pycycle.maps.Fan_map_E3 import FanMap_E3
+# from pycycle.maps.HPC_map_E3 import HPCMapE3
 from pycycle.maps.CENTRIF_map import CENTRIFMap
 
 from pycycle.connect_flow import connect_flow
