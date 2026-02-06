@@ -61,6 +61,7 @@ class Performance(ExplicitComponent):
             Fg += inputs[Fg_val]
         outputs['Fn'] = Fn = Fg - inputs['ram_drag']
         outputs['Fg'] = Fg
+        print(f"Fn: {outputs['Fn']}")
 
         if self.Wfuel_vals:
             Wfuel = 0.0

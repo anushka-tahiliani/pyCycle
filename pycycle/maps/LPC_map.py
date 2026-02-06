@@ -128,3 +128,23 @@ LPCMap.output_data.append({'name': 'effMap', 'values': LPCMap.effMap,
                            'default': np.mean(LPCMap.effMap), 'units': None})
 LPCMap.output_data.append({'name': 'PRmap', 'values': LPCMap.PRmap,
                            'default': 1.969, 'units': None})
+
+
+# epsilon = 1e-8
+# PRmap_dummy = np.array([[[1.00000001 + i * epsilon for i in range(11)] for _ in range(14)] for _ in range(2)])
+# effMap_dummy = np.full((2, 14, 11), 0.999999)
+# Wc_dummy = np.full((2, 14, 11), np.mean(LPCMap.WcMap))  # or choose 1.0
+
+# LPCMap.PRmap = np.array(PRmap_dummy)
+# LPCMap.effMap = np.array(effMap_dummy)
+# #LPCMap.WcMap = np.array(Wc_dummy)
+
+# LPCMap.output_data = []
+# LPCMap.output_data.append({'name': 'WcMap', 'values': LPCMap.WcMap,
+#                            'default': np.mean(LPCMap.WcMap), 'units': 'lbm/s'})
+# LPCMap.output_data.append({'name': 'effMap', 'values': LPCMap.effMap,
+#                            'default': 0.999999, 'units': None})
+# LPCMap.output_data.append({'name': 'PRmap', 'values': LPCMap.PRmap,
+#                            'default': 1.000001, 'units': None})
+
+

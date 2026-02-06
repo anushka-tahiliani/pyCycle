@@ -71,3 +71,26 @@ LPTMap.output_data.append({'name': 'WpMap', 'values': LPTMap.WpMap,
                            'default': np.mean(LPTMap.WpMap), 'units': 'lbm/s'})
 LPTMap.output_data.append({'name': 'effMap', 'values': LPTMap.effMap,
                            'default': np.mean(LPTMap.effMap), 'units': None})
+
+
+# epsilon = 1e-8
+
+# # Create dummy PRmap with increasing values across the 20 columns (len=20)
+# LPTMap.PRmap = np.array([1.00000001  + i * epsilon for i in range(20)])
+
+# # Dummy effMap with constant near-perfect efficiency
+# effMap_dummy = np.full((2, 7, 20), 0.999999)
+
+# # Dummy WpMap with constant mass flow
+# WpMap_dummy = np.full((2, 7, 20), np.mean(LPTMap.WpMap))  # or choose 1.0
+
+# # Assign the dummy values to the map
+# LPTMap.effMap = np.array(effMap_dummy)
+# LPTMap.WpMap = np.array(WpMap_dummy)
+
+# # Redefine output_data for the interpolator
+# LPTMap.output_data = []
+# LPTMap.output_data.append({'name': 'WpMap', 'values': LPTMap.WpMap,
+#                            'default': np.mean(LPTMap.WpMap), 'units': 'lbm/s'})
+# LPTMap.output_data.append({'name': 'effMap', 'values': LPTMap.effMap,
+#                            'default': 0.999999, 'units': None})
