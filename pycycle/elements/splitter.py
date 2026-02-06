@@ -28,6 +28,10 @@ class BPRcalc(om.ExplicitComponent):
         outputs['W1'] = inputs['W_in']/(BPR+1)
         outputs['W2'] = inputs['W_in'] - outputs['W1']
 
+        print('BPRcalc W1:', outputs['W1'])
+        print('BPRcalc W2:', outputs['W2'])
+        
+
     def compute_partials(self, inputs, J):
 
         BPR = inputs['BPR']

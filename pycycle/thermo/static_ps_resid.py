@@ -104,7 +104,7 @@ class PsResid(om.ImplicitComponent):
                 self._ps_guess_cache = ps_guess
 
     def _compute_outputs_MN(self, i):
-
+        #print(self.pathname, i['gamma'], i['R'], i['Ts'])
         Vsonic = (i['gamma']*i['R']*i['Ts'])**0.5
         old = np.seterr(all='raise')
         try:

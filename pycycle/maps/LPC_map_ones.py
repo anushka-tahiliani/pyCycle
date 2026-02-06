@@ -2,21 +2,21 @@ import numpy as np
 
 from pycycle.maps.map_data import MapData
 
-LPCMap = MapData()
+LPCMap_ones = MapData()
 
 # Map design point values
-LPCMap.defaults = {}
-LPCMap.defaults['alphaMap'] = 0.0
-LPCMap.defaults['NcMap'] = 1.00
-LPCMap.defaults['PR'] = 1.969
-LPCMap.defaults['RlineMap'] = 2.150
-LPCMap.RlineStall = 1.0
+LPCMap_ones.defaults = {}
+LPCMap_ones.defaults['alphaMap'] = 0.0
+LPCMap_ones.defaults['NcMap'] = 1.00
+LPCMap_ones.defaults['PR'] = 1.969
+LPCMap_ones.defaults['RlineMap'] = 2.150
+LPCMap_ones.RlineStall = 1.0
 
-LPCMap.alphaMap = np.array([0.000, 90.000])
-LPCMap.NcMap = np.array([0.300, 0.400, 0.500, 0.600, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 1.000, 1.050, 1.100, 1.150])
-LPCMap.RlineMap = np.array([1.000, 1.200, 1.400, 1.600, 1.800, 2.000, 2.200, 2.400, 2.600, 2.800, 3.000]) 
+LPCMap_ones.alphaMap = np.array([0.000, 90.000])
+LPCMap_ones.NcMap = np.array([0.300, 0.400, 0.500, 0.600, 0.700, 0.750, 0.800, 0.850, 0.900, 0.950, 1.000, 1.050, 1.100, 1.150])
+LPCMap_ones.RlineMap = np.array([1.000, 1.200, 1.400, 1.600, 1.800, 2.000, 2.200, 2.400, 2.600, 2.800, 3.000]) 
 
-LPCMap.WcMap = np.array([[[17.907, 19.339, 20.749, 22.136, 23.498, 24.833, 26.141, 27.420, 28.669, 29.887, 31.011],
+LPCMap_ones.WcMap = np.array([[[17.907, 19.339, 20.749, 22.136, 23.498, 24.833, 26.141, 27.420, 28.669, 29.887, 31.011],
   [24.951, 26.742, 28.485, 30.177, 31.815, 33.397, 34.921, 36.385, 37.788, 39.128, 40.405],
   [32.682, 34.715, 36.662, 38.520, 40.286, 41.958, 43.533, 45.011, 46.390, 47.669, 48.848],
   [40.927, 43.115, 45.168, 47.083, 48.858, 50.492, 51.983, 53.331, 54.539, 55.607, 56.537],
@@ -45,7 +45,7 @@ LPCMap.WcMap = np.array([[[17.907, 19.339, 20.749, 22.136, 23.498, 24.833, 26.14
   [93.626, 93.712, 93.793, 93.868, 93.939, 94.004, 94.064, 94.120, 94.170, 94.216, 94.257],
   [96.084, 96.074, 96.064, 96.054, 96.044, 96.033, 96.022, 96.012, 96.000, 95.989, 95.978]]])
 
-LPCMap.effMap = np.array([[[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .7410, .6022, .3674, .0000],
+LPCMap_ones.effMap = np.array([[[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .7410, .6022, .3674, .99],
   [.8230, .8454, .8628, .8741, .8775, .8708, .8419, .7732, .6477, .4372, .0916],
   [.8411, .8631, .8805, .8921, .8966, .8918, .8671, .8065, .6959, .5124, .2168],
   [.8565, .8783, .8957, .9077, .9131, .9099, .8883, .8338, .7340, .5696, .3083],
@@ -59,7 +59,7 @@ LPCMap.effMap = np.array([[[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .74
   [.9159, .9171, .9176, .9177, .9171, .9159, .9136, .9097, .9042, .8968, .8876],
   [.9061, .9059, .9055, .9052, .9047, .9042, .9036, .9028, .9018, .9007, .8994],
   [.8962, .8964, .8965, .8966, .8967, .8968, .8969, .8970, .8971, .8972, .8973]],
-  [[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .7410, .6022, .3674, .0000],
+  [[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .7410, .6022, .3674, .99],
   [.8230, .8454, .8628, .8741, .8775, .8708, .8419, .7732, .6477, .4372, .0916],
   [.8411, .8631, .8805, .8921, .8966, .8918, .8671, .8065, .6959, .5124, .2168],
   [.8565, .8783, .8957, .9077, .9131, .9099, .8883, .8338, .7340, .5696, .3083],
@@ -74,7 +74,7 @@ LPCMap.effMap = np.array([[[.8070, .8291, .8461, .8566, .8586, .8497, .8170, .74
   [.9061, .9059, .9055, .9052, .9047, .9042, .9036, .9028, .9018, .9007, .8994],
   [.8962, .8964, .8965, .8966, .8967, .8968, .8969, .8970, .8971, .8972, .8973]]])
 
-LPCMap.PRmap = np.array([[[1.0678, 1.0649, 1.0613, 1.0571, 1.0522, 1.0468, 1.0402, 1.0322, 1.0227, 1.0117, 1.0000],
+LPCMap_ones.PRmap = np.array([[[1.0678, 1.0649, 1.0613, 1.0571, 1.0522, 1.0468, 1.0402, 1.0322, 1.0227, 1.0117, 1.00001],
   [1.1239, 1.1186, 1.1122, 1.1047, 1.0962, 1.0865, 1.0751, 1.0611, 1.0445, 1.0257, 1.0045],
   [1.1994, 1.1910, 1.1809, 1.1691, 1.1558, 1.1409, 1.1233, 1.1020, 1.0771, 1.0488, 1.0173],
   [1.2981, 1.2855, 1.2706, 1.2533, 1.2339, 1.2122, 1.1869, 1.1563, 1.1210, 1.0811, 1.0370],
@@ -103,48 +103,84 @@ LPCMap.PRmap = np.array([[[1.0678, 1.0649, 1.0613, 1.0571, 1.0522, 1.0468, 1.040
   [2.3771, 2.3664, 2.3557, 2.3448, 2.3339, 2.3229, 2.3118, 2.3004, 2.2887, 2.2768, 2.2646],
   [2.4343, 2.4365, 2.4387, 2.4409, 2.4430, 2.4452, 2.4473, 2.4495, 2.4516, 2.4538, 2.4559]]])
 
-#LPCMap.Nc_data, LPCMap.alpha_data, LPCMap.Rline_data = np.meshgrid(LPCMap.Nc_vals, LPCMap.alpha_vals, LPCMap.Rline_vals, sparse=False)
-LPCMap.Npts = LPCMap.NcMap.size
+#LPCMap_ones.Nc_data, LPCMap_ones.alpha_data, LPCMap_ones.Rline_data = np.meshgrid(LPCMap_ones.Nc_vals, LPCMap_ones.alpha_vals, LPCMap_ones.Rline_vals, sparse=False)
 
-LPCMap.units = {}
-LPCMap.units['NcMap'] = 'rpm'
-LPCMap.units['WcMap'] = 'lbm/s'
+LPCMap_ones.Npts = LPCMap_ones.NcMap.size
+
+LPCMap_ones.units = {}
+LPCMap_ones.units['NcMap'] = 'rpm'
+LPCMap_ones.units['WcMap'] = 'lbm/s'
 
 # format for new regular grid interpolator:
 
-LPCMap.param_data = []
-LPCMap.output_data = []
+LPCMap_ones.param_data = []
+LPCMap_ones.output_data = []
 
-LPCMap.param_data.append({'name': 'alphaMap', 'values': LPCMap.alphaMap,
+LPCMap_ones.param_data.append({'name': 'alphaMap', 'values': LPCMap_ones.alphaMap,
                           'default': 0, 'units': None})
-LPCMap.param_data.append({'name': 'NcMap', 'values': LPCMap.NcMap,
+LPCMap_ones.param_data.append({'name': 'NcMap', 'values': LPCMap_ones.NcMap,
                           'default': 1.0, 'units': 'rpm'})
-LPCMap.param_data.append({'name': 'RlineMap', 'values': LPCMap.RlineMap,
+LPCMap_ones.param_data.append({'name': 'RlineMap', 'values': LPCMap_ones.RlineMap,
                           'default': 2.15, 'units': None})
 
-LPCMap.output_data.append({'name': 'WcMap', 'values': LPCMap.WcMap,
-                           'default': np.mean(LPCMap.WcMap), 'units': 'lbm/s'})
-LPCMap.output_data.append({'name': 'effMap', 'values': LPCMap.effMap,
-                           'default': np.mean(LPCMap.effMap), 'units': None})
-LPCMap.output_data.append({'name': 'PRmap', 'values': LPCMap.PRmap,
+LPCMap_ones.output_data.append({'name': 'WcMap', 'values': LPCMap_ones.WcMap,
+                           'default': np.mean(LPCMap_ones.WcMap), 'units': 'lbm/s'})
+LPCMap_ones.output_data.append({'name': 'effMap', 'values': LPCMap_ones.effMap,
+                           'default': np.mean(LPCMap_ones.effMap), 'units': None})
+LPCMap_ones.output_data.append({'name': 'PRmap', 'values': LPCMap_ones.PRmap,
                            'default': 1.969, 'units': None})
+
+
+
+
+
+
+
+# epsilon = 1e-5  # adjust as needed
+# LPCMap_ones.effMap = LPCMap_ones.effMap / (LPCMap_ones.effMap + epsilon)
+
+# # arr = LPCMap_ones.PRmap.copy()
+# # # Mask values equal to 1.0 (so they remain 1)
+# # mask = (arr == 1.0)
+# # # Apply transformation only where arr != 1
+# # arr[~mask] = arr[~mask] / (arr[~mask] - epsilon)
+# # LPCMap_ones.PRmap = arr
+# epsilon = 1e-6
+# LPCMap_ones.PRmap = LPCMap_ones.PRmap / (LPCMap_ones.PRmap - epsilon)
+
+LPCMap_ones.output_data = []
+LPCMap_ones.output_data.append({'name': 'WcMap', 'values': LPCMap_ones.WcMap,
+                           'default': np.mean(LPCMap_ones.WcMap), 'units': 'lbm/s'})
+LPCMap_ones.output_data.append({'name': 'effMap', 'values': LPCMap_ones.effMap,
+                           'default': 0.999999, 'units': None})
+LPCMap_ones.output_data.append({'name': 'PRmap', 'values': LPCMap_ones.PRmap,
+                           'default': 1.000001, 'units': None})
 
 
 # epsilon = 1e-8
 # PRmap_dummy = np.array([[[1.00000001 + i * epsilon for i in range(11)] for _ in range(14)] for _ in range(2)])
-# effMap_dummy = np.full((2, 14, 11), 0.999999)
-# Wc_dummy = np.full((2, 14, 11), np.mean(LPCMap.WcMap))  # or choose 1.0
+# #effMap_dummy = np.full((2, 14, 11), 0.999999)
+# #Wc_dummy = np.full((2, 14, 11), np.mean(LPCMap_ones.WcMap))  # or choose 1.0
+# LPCMap_ones.PRmap = np.array(PRmap_dummy)
+#LPCMap_ones.effMap = np.array(effMap_dummy)
+#LPCMap_ones.WcMap = np.array(Wc_dummy)
 
-# LPCMap.PRmap = np.array(PRmap_dummy)
-# LPCMap.effMap = np.array(effMap_dummy)
-# #LPCMap.WcMap = np.array(Wc_dummy)
+# === Add tiny slope to PRmap and effMap ===
+PR_base = 1.000001
+eff_base = 0.999999
 
-# LPCMap.output_data = []
-# LPCMap.output_data.append({'name': 'WcMap', 'values': LPCMap.WcMap,
-#                            'default': np.mean(LPCMap.WcMap), 'units': 'lbm/s'})
-# LPCMap.output_data.append({'name': 'effMap', 'values': LPCMap.effMap,
-#                            'default': 0.999999, 'units': None})
-# LPCMap.output_data.append({'name': 'PRmap', 'values': LPCMap.PRmap,
-#                            'default': 1.000001, 'units': None})
+PRmap = np.zeros((2, 14, 11))
+effMap = np.zeros((2, 14, 11))
 
+for a in range(2):
+    for i in range(14):
+        for j in range(11):
+            PRmap[a, i, j] = PR_base + 1e-6 * (i + j)      # tiny increasing PR
+            effMap[a, i, j] = eff_base - 1e-6 * (i + j)     # tiny decreasing efficiency
+
+LPCMap_ones.PRmap = PRmap
+LPCMap_ones.effMap = effMap
+
+# print(LPCMap_ones.PRmap)
+# print(LPCMap_ones.effMap)
 

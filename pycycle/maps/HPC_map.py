@@ -9,7 +9,7 @@ HPCMap = MapData()
 # Map design point values
 HPCMap.defaults = {}
 HPCMap.defaults['alphaMap'] = 0.0
-HPCMap.defaults['NcMap'] = 0.976
+HPCMap.defaults['NcMap'] = 0.976 #1 #0.976
 HPCMap.defaults['PR'] = 10.894
 HPCMap.defaults['RlineMap'] = 2.050
 HPCMap.RlineStall = 1.0
@@ -120,7 +120,7 @@ HPCMap.output_data = []
 HPCMap.param_data.append({'name': 'alphaMap', 'values': HPCMap.alphaMap,
                           'default': 0, 'units': None})
 HPCMap.param_data.append({'name': 'NcMap', 'values': HPCMap.NcMap,
-                          'default': 0.976, 'units': 'rpm'})
+                          'default': 1, 'units': 'rpm'})
 HPCMap.param_data.append({'name': 'RlineMap', 'values': HPCMap.RlineMap,
                           'default': 2.05, 'units': None})
 
