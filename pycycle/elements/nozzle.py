@@ -997,7 +997,7 @@ class PressureCalcs(om.ExplicitComponent):
         outputs['Pt_th'] = inputs['Pt_in'] * (1. - inputs['dPqP'])
         outputs['Ps_calc'] = outputs['Pt_th'] / inputs['PR']
 
-        print(f"[DEBUG] {self.pathname} - Pt_in={inputs['Pt_in']}, dPqP={inputs['dPqP']}, PR={inputs['PR']}")
+        # print(f"[DEBUG] {self.pathname} - Pt_in={inputs['Pt_in']}, dPqP={inputs['dPqP']}, PR={inputs['PR']}")
 #         print(f"[DEBUG] {self.pathname} - Pt_th={outputs['Pt_th']}, Ps_calc={outputs['Ps_calc']}")
 
     def compute_partials(self, inputs, J):
