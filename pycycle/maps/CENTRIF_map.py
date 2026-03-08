@@ -8,7 +8,7 @@ CENTRIFMap = MapData()
 CENTRIFMap.defaults = {}
 CENTRIFMap.defaults['alphaMap'] = 0.0
 CENTRIFMap.defaults['NcMap'] = 1.00
-CENTRIFMap.defaults['PR'] = 3.62 #3.44
+CENTRIFMap.defaults['PR'] = 3.44 #3.62 #3.44
 CENTRIFMap.defaults['RlineMap'] = 1.8 #2
 CENTRIFMap.RlineStall = 1.0
 
@@ -104,7 +104,7 @@ CENTRIFMap.output_data.append({'name': 'WcMap', 'values': CENTRIFMap.WcMap,
 CENTRIFMap.output_data.append({'name': 'effMap', 'values': CENTRIFMap.effMap,
                            'default': np.mean(CENTRIFMap.effMap), 'units': None})
 CENTRIFMap.output_data.append({'name': 'PRmap', 'values': CENTRIFMap.PRmap,
-                           'default': 3.62, 'units': None})
+                           'default': 3.44, 'units': None})
 
 
 # epsilon = 1e-8
