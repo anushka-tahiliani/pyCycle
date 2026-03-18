@@ -66,6 +66,7 @@ class CoolingCalcs(om.ExplicitComponent):
 
         n_stages = self.options['n_stages']
         i_row = self.options['i_row']
+        # print("CoolingCalcs: ", self.pathname, "i_row:", i_row, "turb_pwr:", inputs['turb_pwr'], "Tt_primary:", inputs['Tt_primary'], "Tt_cool:", inputs['Tt_cool'], "W_primary:", inputs['W_primary'])
 
         # Determine which stage this row is in (0-based)
         stage_index = i_row // 2
@@ -101,7 +102,15 @@ class CoolingCalcs(om.ExplicitComponent):
             except FloatingPointError:
                 raise om.AnalysisError('bad flow values in {}; W: {}'.format(self.pathname, W_primary))
 
-        outputs['ht_out'] = (W_primary*inputs['ht_primary'] + W_cool*inputs['ht_cool'])/(W_primary+W_cool) - dh/W_primary
+        # outputs['ht_out'] = (W_primary*inputs['ht_primary'] + W_cool*inputs['ht_cool'])/(W_primary+W_cool) - dh/W_primary
+
+        W_out = W_primary + W_cool
+
+        if i_row % 2 == 0:  # stator: mix immediately
+            outputs['ht_out'] = (W_primary * inputs['ht_primary'] + W_cool * inputs['ht_cool']) / W_out
+        else:  # rotor: do work first, then mix rotor coolant
+            ht_post_rotor = inputs['ht_primary'] - dh / W_primary
+            outputs['ht_out'] = (W_primary * ht_post_rotor + W_cool * inputs['ht_cool']) / W_out
 
         Pt_out = inputs['Pt_out']
         Pt_in = inputs['Pt_in']
@@ -159,20 +168,39 @@ class CoolingCalcs(om.ExplicitComponent):
         ht_cool = inputs['ht_cool']
 
         WpWc = W_primary + W_cool
-        dht_out_dW_cool = -W_primary*ht_primary/WpWc**2 + ht_cool/WpWc - W_cool*ht_cool/WpWc**2
+        # dht_out_dW_cool = -W_primary*ht_primary/WpWc**2 + ht_cool/WpWc - W_cool*ht_cool/WpWc**2
+
+
+        if i_row % 2 == 0:  # stator
+            dht_out_dW_cool = W_primary * (ht_cool - ht_primary) / WpWc**2
+            dht_dWp_direct = W_cool * (ht_primary - ht_cool) / WpWc**2
+            dht_dturb_pwr = 0.0
+        else:  # rotor
+            dht_out_dW_cool = (W_primary * (ht_cool - ht_primary) + dh) / WpWc**2
+            dht_dWp_direct = (W_cool * (ht_primary - ht_cool) + dh) / WpWc**2
+            dht_dturb_pwr = -ddh_dturb_pwr / WpWc
+
 
         J['W_cool', 'W_primary'] = dWc_dWp
         J['W_cool', 'x_factor'] = dWc_dx_factor
         J['W_cool', 'Tt_primary'] = dWc_dTt_primary
         J['W_cool', 'Tt_cool'] = dWc_dTt_cool
 
+        # J['ht_out', 'x_factor'] = dht_out_dW_cool * dWc_dx_factor
+        # J['ht_out', 'W_primary'] = (ht_primary-ht_cool)*(W_cool - W_primary*dWc_dWp)/WpWc**2 + dh/W_primary**2
+        # J['ht_out', 'Tt_primary'] = dht_out_dW_cool * dWc_dTt_primary
+        # J['ht_out', 'Tt_cool'] = dht_out_dW_cool * dWc_dTt_cool
+        # J['ht_out', 'ht_primary'] = W_primary/WpWc
+        # J['ht_out', 'ht_cool'] = W_cool/WpWc
+        # J['ht_out', 'turb_pwr'] = -ddh_dturb_pwr/W_primary
+
         J['ht_out', 'x_factor'] = dht_out_dW_cool * dWc_dx_factor
-        J['ht_out', 'W_primary'] = (ht_primary-ht_cool)*(W_cool - W_primary*dWc_dWp)/WpWc**2 + dh/W_primary**2
+        J['ht_out', 'W_primary'] = dht_dWp_direct + dht_out_dW_cool * dWc_dWp
         J['ht_out', 'Tt_primary'] = dht_out_dW_cool * dWc_dTt_primary
         J['ht_out', 'Tt_cool'] = dht_out_dW_cool * dWc_dTt_cool
-        J['ht_out', 'ht_primary'] = W_primary/WpWc
-        J['ht_out', 'ht_cool'] = W_cool/WpWc
-        J['ht_out', 'turb_pwr'] = -ddh_dturb_pwr/W_primary
+        J['ht_out', 'ht_primary'] = W_primary / WpWc
+        J['ht_out', 'ht_cool'] = W_cool / WpWc
+        J['ht_out', 'turb_pwr'] = dht_dturb_pwr
 
         J['Pt_stage', 'Pt_in'] = self.i_stage
         J['Pt_stage', 'Pt_out'] = 1 - self.i_stage
